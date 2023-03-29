@@ -8,21 +8,9 @@ module.exports = (req, res, next) => {
     req.userData = decoded;
     next();
   } catch (e) {
-    return res.status(401).json({
-      message: "Your not logged in",
-    });
+    // return res.status(401).json({
+    //   message: "Your not logged in",
+    // });
+    return res.redirect('/login')
   }
-
-  // try {
-  //   alert('hi')
-  //   const token = req.cookies.token;
-  //   if (!token) {
-  //     throw new Error('No token found');
-  //   }
-  //   const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-  //   req.userId = decodedToken.userId;
-  //   next();
-  // } catch (err) {
-  //   res.redirect('/login');
-  // }
 };
