@@ -13036,7 +13036,6 @@ a.purchase-btn {
 .intro,
 .intro a{
   color:#fff;
-  font-family:
 }
 /* customizable snowflake styling */
 .snowflake {
@@ -13214,7 +13213,7 @@ box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
   display:flex ;
   justify-content: space-between;
  }
- body{margin-top:20px;}
+ body{/* margin-top:20px; */}
 .timeline-steps {
     display: flex;
     justify-content: center;
