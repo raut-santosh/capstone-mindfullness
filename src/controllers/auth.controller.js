@@ -1,3 +1,7 @@
+const User = require('../models/user.model')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 exports.register = (req, res) => {
     // console.log(req.body)
     if(req.method == 'GET'){
@@ -28,7 +32,7 @@ exports.register = (req, res) => {
                     .save()
                     .then((result) => {
                       console.log(result);
-                      res.render('register',{
+                      res.render('login',{
                         msg: 'success'
                     })
                     })
@@ -79,7 +83,7 @@ exports.login = (req, res) => {
             //     message: "Login successfully",
             //     token: token,
             //   });
-            res.redirect('')
+            res.redirect('/home')
             } else {
               res.status(401).json({
                 message: "Wrong password",
