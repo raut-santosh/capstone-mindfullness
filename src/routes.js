@@ -28,5 +28,6 @@ module.exports = function (app) {
     app.get('/blog-details', checkAuth, pagesController.blogDetails)
 
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
+    app.get('/admin/blog', checkAuth, adminController.blog)
 
 }

@@ -11,3 +11,9 @@ exports.dashboard = (req, res) => {
     }
     res.render('admin/dashboard')
 }
+
+exports.blog = (req, res) => {
+    res.render('admin/blog', {
+        apiKey: 'f054m3udyw9wek0kuiszimeycs4ka8c1b3climav4cbklkix'
+    })
+}
