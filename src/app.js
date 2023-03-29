@@ -7,7 +7,10 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 const User = require('./models/user.model')
 const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser');
+
 require('dotenv').config()
+const checkAuth = require('./middleware/check-auth')
 // const { error } = require('console')
 
 // console.log(__dirname)
@@ -29,6 +32,7 @@ mongoose
     console.log("Error: ", e);
   });
 
+  app.use(cookieParser());
   app.use(morgan("dev"));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
@@ -56,7 +60,7 @@ app.use(express.static(publicDirectoryPath))
 
 
 // using render
-app.get('', (req, res) => {
+app.get('', checkAuth, (req, res) => {
     res.render('index', {
         title: 'Weather',
         name: 'santosh'
@@ -140,11 +144,12 @@ app.post("/login", (req, res) => {
                   expiresIn: "1h",
                 }
               );
+              res.cookie('token', token, { httpOnly: true });
             //   res.status(200).json({
             //     message: "Login successfully",
             //     token: token,
             //   });
-            res.render('login')
+            res.redirect('')
             } else {
               res.status(401).json({
                 message: "Wrong password",
