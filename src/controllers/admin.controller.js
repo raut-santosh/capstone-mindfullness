@@ -14,6 +14,18 @@ exports.dashboard = (req, res) => {
 
 exports.blog = (req, res) => {
     res.render('admin/blog', {
-        apiKey: 'f054m3udyw9wek0kuiszimeycs4ka8c1b3climav4cbklkix'
+        apiKey: ''
     })
+}
+
+exports.ngo = (req, res) => {
+    res.render('admin/ngo')
+}
+
+exports.professionals = (req, res) => {
+    res.render('admin/professionals')
+}
+
+exports.getastart = (req, res) => {
+    res.render('admin/getastart')
 }

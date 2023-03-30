@@ -27,7 +27,13 @@ module.exports = function (app) {
     app.get('/portfolio-details', checkAuth, pagesController.portfolioDetails)
     app.get('/blog-details', checkAuth, pagesController.blogDetails)
 
+    app.get('/admin',checkAuth, (req, res) => {
+        res.redirect('/admin/dashboard')
+    })
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
     app.get('/admin/blog', checkAuth, adminController.blog)
+    app.get('/admin/ngo', checkAuth, adminController.ngo)
+    app.get('/admin/professionals', checkAuth, adminController.professionals)
+    app.get('/admin/getastart', checkAuth, adminController.getastart)
 
 }
