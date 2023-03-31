@@ -4,11 +4,6 @@ const adminController = require('./controllers/admin.controller')
 const checkAuth = require('./middleware/check-auth')
 
 
-
-
-
-
-
 module.exports = function (app) {
 
     app.get('', (req, res) => {
@@ -33,6 +28,7 @@ module.exports = function (app) {
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
     app.get('/admin/blog', checkAuth, adminController.blog)
     app.get('/admin/ngo', checkAuth, adminController.ngo)
+    app.post('/admin/ngo', checkAuth, adminController.ngo)
     app.get('/admin/professionals', checkAuth, adminController.professionals)
     app.get('/admin/getastart', checkAuth, adminController.getastart)
 

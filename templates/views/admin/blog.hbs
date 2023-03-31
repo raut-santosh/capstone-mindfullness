@@ -1,24 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://cdn.tiny.cloud/1/f054m3udyw9wek0kuiszimeycs4ka8c1b3climav4cbklkix/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-</head>
-<body>
-  <textarea id="tiny-editor">
-    Welcome to TinyMCE!
-  </textarea>
-  <script>
-    tinymce.init({
-      selector: '#tiny-editor',
-      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-      mergetags_list: [
-        { value: 'First.Name', title: 'First Name' },
-        { value: 'Email', title: 'Email' },
-      ],
-    });
-  </script>
-</body>
-</html>
+{{>admin/header}}
+{{>admin/sidebar}}
+
+
+
+
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Blog Page</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Pages</li>
+        <li class="breadcrumb-item active">Blog</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Write Blog</h5>
+
+            <!-- Multi Columns Form -->
+            <form class="row g-3" action="/admin/blog" method="POST">
+              {{!-- <input type="text" style="display:none;" name="id" value="{{{data._id}}}"> --}}
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="inputName5" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="inputName5" name="title" value="{{data.title}}">
+                </div>
+                  <div class="mb-3">
+                    <label for="inputNumber" class="col-form-label">Image</label>
+                    <div class="col-sm-12">
+                      <input class="form-control" type="file" id="formFile" name="image" value="{{data.image}}">
+                    </div>
+                  </div>
+                   <div class="mb-3">
+                    <label for="tiny" class="form-label">Description</label>
+                    <textarea class="tinymce-editor" id="tiny" name="description">
+                            {{data.description}}
+                    </textarea>
+                  </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+
+{{>admin/footer}}

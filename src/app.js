@@ -33,7 +33,7 @@ mongoose
   });
 
   app.use(cookieParser());
-  app.use(morgan("dev"));
+  // app.use(morgan("dev"));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   app.use("/uploads", express.static("uploads"));
