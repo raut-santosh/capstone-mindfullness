@@ -26,10 +26,19 @@ module.exports = function (app) {
         res.redirect('/admin/dashboard')
     })
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
-    app.get('/admin/blog', checkAuth, adminController.blog)
+    app.get('/admin/blog_list', checkAuth, adminController.blog_list)
+
+    app.get('/admin/blog_addedit', checkAuth, adminController.blog_addedit)
+    app.get('/admin/blog_addedit/:id', checkAuth, adminController.blog_addedit)
+    app.post('/admin/blog_addedit/:id', checkAuth, adminController.blog_addedit)
+
     app.get('/admin/ngo', checkAuth, adminController.ngo)
     app.post('/admin/ngo', checkAuth, adminController.ngo)
+
     app.get('/admin/professionals', checkAuth, adminController.professionals)
+    app.post('/admin/professionals', checkAuth, adminController.professionals)
+    
     app.get('/admin/getastart', checkAuth, adminController.getastart)
+    app.post('/admin/getastart', checkAuth, adminController.getastart)
 
 }

@@ -17,11 +17,26 @@ exports.dashboard = (req, res) => {
     res.render('admin/dashboard')
 }
 
-exports.blog = (req, res) => {
+exports.blog_addedit = async (req, res) => {
     if(req.method == 'GET'){
-        res.render('admin/blog')
+        if(!req.query.id){
+            res.render('admin/blog_addedit')
+        }else{
+            Blog.findOne({_id: req.query.id}).then((data) => {
+                res.render('admin/blog_addedit',{data})
+            })
+        }
     }else{
         console.log(req.body)
+        if(req.body.id){
+            let blog = await Blog.findOne({_id: req.body.id});
+            let data = {
+                id: blog._id,
+                title: blog.title,
+                image: blog.image,
+                description: blog.description
+            }
+        }
         const blog = new Blog({
             title: req.body.title,
             description: req.body.description,
@@ -29,12 +44,25 @@ exports.blog = (req, res) => {
         })
         blog.save().then((data) => {
             // console.log(data)
-            res.render('admin/ngo', {
-                data: JSON.stringify(data)
+            res.render('admin/blog_addedit', {
+                data: {
+                    id: data._id,
+                    title: data.title,
+                    description: data.description,
+                    image: data.image
+                }
             })
         })
     }
     
+}
+
+exports.blog_list = async (req, res) => {
+    if(req.method == 'GET'){
+        let blogs = Blog.find({}).then((list) => {
+            res.render('admin/blog_list',{ list })
+        })
+    }
 }
 
 exports.ngo = async (req, res) => {

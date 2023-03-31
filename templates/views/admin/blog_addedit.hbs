@@ -1,9 +1,5 @@
-{{>admin/header}}
-{{>admin/sidebar}}
-
-
-
-
+{{> admin/header}}
+{{> admin/sidebar}}
 
 <main id="main" class="main">
 
@@ -27,9 +23,10 @@
             <h5 class="card-title">Write Blog</h5>
 
             <!-- Multi Columns Form -->
-            <form class="row g-3" action="/admin/blog" method="POST">
+            <form class="row g-3" action="/admin/blog_addedit" method="POST">
               {{!-- <input type="text" style="display:none;" name="id" value="{{{data._id}}}"> --}}
               <div class="col-md-12">
+                <input style="display:none;" type="text" name="id" value="{{data.id}}">
                 <div class="mb-3">
                   <label for="inputName5" class="form-label">Title</label>
                   <input type="text" class="form-control" id="inputName5" name="title" value="{{data.title}}">
@@ -62,4 +59,4 @@
 
 
 
-{{>admin/footer}}
+{{> admin/footer}}
