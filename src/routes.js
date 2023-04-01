@@ -2,6 +2,7 @@ const pagesController = require('./controllers/pages.controller')
 const authController = require('./controllers/auth.controller')
 const adminController = require('./controllers/admin.controller')
 const checkAuth = require('./middleware/check-auth')
+const {upload} = require('./middleware/helper')
 
 
 module.exports = function (app) {
@@ -28,17 +29,20 @@ module.exports = function (app) {
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
     app.get('/admin/blog_list', checkAuth, adminController.blog_list)
 
-    app.get('/admin/blog_addedit', checkAuth, adminController.blog_addedit)
-    app.get('/admin/blog_addedit/:id', checkAuth, adminController.blog_addedit)
-    app.post('/admin/blog_addedit/:id', checkAuth, adminController.blog_addedit)
+    app.get('/admin/blog_addedit', checkAuth, upload.single('image'), adminController.blog_addedit)
+    app.get('/admin/blog_addedit/:id', checkAuth, upload.single('image'), adminController.blog_addedit)
+    app.post('/admin/blog_addedit', checkAuth, upload.single('image'), adminController.blog_addedit)
+    app.post('/admin/blog_addedit/:id', checkAuth, upload.single('image'), adminController.blog_addedit)
 
     app.get('/admin/ngo', checkAuth, adminController.ngo)
     app.post('/admin/ngo', checkAuth, adminController.ngo)
 
     app.get('/admin/professionals', checkAuth, adminController.professionals)
     app.post('/admin/professionals', checkAuth, adminController.professionals)
-    
+
     app.get('/admin/getastart', checkAuth, adminController.getastart)
+    app.get('/admin/getastart/:id', checkAuth, adminController.getastart)
     app.post('/admin/getastart', checkAuth, adminController.getastart)
+    app.post('/admin/getastart/:id', checkAuth, adminController.getastart)
 
 }

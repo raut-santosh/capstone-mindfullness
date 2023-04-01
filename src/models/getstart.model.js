@@ -8,3 +8,5 @@ const getStartSchema = mongoose.Schema({
     },
     items: [{}]
 })
+
+module.exports = mongoose.model('GetAStart', getStartSchema)

@@ -1,5 +1,5 @@
-const path = require('path')
 const express = require('express')
+const path = require('path')
 const bcrypt = require('bcrypt')
 const hbs = require('hbs')
 const morgan = require("morgan");
@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const User = require('./models/user.model')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
 
 require('dotenv').config()
 const checkAuth = require('./middleware/check-auth')
@@ -16,12 +17,11 @@ const checkAuth = require('./middleware/check-auth')
 // console.log(__dirname)
 // console.log(path.join(__dirname, '../public'))
 
+
 const app = express()
 
 mongoose
-  .connect(
-    "mongodb+srv://sam:P2Q0wVEIuyDV9Nbp@cluster0.mglis6g.mongodb.net/capstone?retryWrites=true&w=majority",
-    {
+  .connect(process.env.MONGO_URL,{
       useNewUrlParser: true,
     }
   )

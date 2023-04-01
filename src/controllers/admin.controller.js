@@ -3,7 +3,8 @@ const NGO = require('../models/ngo.model')
 const Blog = require('../models/blog.model')
 const GetAStart = require('../models/getstart.model')
 const Professionals = require('../models/professionals.model') 
-
+const path = require('path')
+const multer = require('multer')
 
 exports.dashboard = (req, res) => {
     // console.log(req.userData)
@@ -18,6 +19,7 @@ exports.dashboard = (req, res) => {
 }
 
 exports.blog_addedit = async (req, res) => {
+    console.log(req.file)
     if(req.method == 'GET'){
         if(!req.query.id){
             res.render('admin/blog_addedit')
@@ -27,20 +29,23 @@ exports.blog_addedit = async (req, res) => {
             })
         }
     }else{
-        console.log(req.body)
-        if(req.body.id){
-            let blog = await Blog.findOne({_id: req.body.id});
-            let data = {
+        if(req.query.id){
+            let blog = await Blog.findOne({_id: req.query.id});
+            let data = new Blog({
                 id: blog._id,
                 title: blog.title,
-                image: blog.image,
+                file: blog.file,
                 description: blog.description
-            }
+            })
+            data.save().then((data)=>{
+                res.render('admin/blog_addedit',{data})
+            })
         }
-        const blog = new Blog({
+        let file = {name: req.file.orignalname, filename: req.file.filename, type: req.file.type, path: req.file.path}
+        let blog = new Blog({
             title: req.body.title,
             description: req.body.description,
-            image: req.body.image
+            file: file
         })
         blog.save().then((data) => {
             // console.log(data)
@@ -49,7 +54,7 @@ exports.blog_addedit = async (req, res) => {
                     id: data._id,
                     title: data.title,
                     description: data.description,
-                    image: data.image
+                    file: data.file
                 }
             })
         })
@@ -59,7 +64,7 @@ exports.blog_addedit = async (req, res) => {
 
 exports.blog_list = async (req, res) => {
     if(req.method == 'GET'){
-        let blogs = Blog.find({}).then((list) => {
+        Blog.find({}).then((list) => {
             res.render('admin/blog_list',{ list })
         })
     }
@@ -102,6 +107,106 @@ exports.professionals = (req, res) => {
     res.render('admin/professionals')
 }
 
-exports.getastart = (req, res) => {
-    res.render('admin/getastart')
+exports.getastart = async (req, res) => {
+    console.log('body',req.body)
+    if(req.method == 'GET'){
+        await GetAStart.findOne({}).then((data) => {
+            if(data){
+                console.log('Get data id')
+                let i_data = {}
+                let i = 0;
+                data?.items.forEach(item => {
+                    for(let key in item){
+                    i_data[key+'_'+i] = item[key];
+                    }
+                    i++;
+                });
+                data = {
+                    id: data._id.toString(),
+                    title: data.title,
+                    description: data.description,
+                    ...i_data,
+                }
+                console.log('data',data)
+                res.render('admin/getastart', {data})
+            }else{
+                res.render('admin/getastart')
+            }
+            
+        })
+        console.log('get without id')
+        res.render('admin/getastart')
+    }else{
+        if(req.body.id){
+            console.log('post with id')
+            let getastart = await GetAStart.findOne({_id: req.body.id});
+            let items = [];
+
+            for (let i = 0; i < req.body.item_name.length; i++) {
+                let item = {
+                    item_name: req.body.item_name[i],
+                    item_count: req.body.item_count[i],
+                    item_content: req.body.item_content[i]
+                };
+                items.push(item);
+            }
+            await GetAStart.findOneAndUpdate({_id: getastart._id}, {
+                title: req.body.title,
+                description: req.body.description,
+                items:items
+            }).then((data)=>{
+                let i_data = {}
+                let i = 0;
+                data.items.forEach(item => {
+                    for(let key in item){
+                    i_data[key+'_'+i] = item[key];
+                    }
+                    i++;
+                });
+                data = {
+                    id: data._id,
+                    title: data.title,
+                    description: data.description,
+                    ...i_data,
+                }
+                res.render('admin/getastart',{data})
+            })
+        }else{
+            console.log('post without id')
+            let items = [];
+
+            for (let i = 0; i < req.body.item_name.length; i++) {
+                let item = {
+                    item_name: req.body.item_name[i],
+                    item_count: req.body.item_count[i],
+                    item_content: req.body.item_content[i]
+                };
+                items.push(item);
+            }
+
+            let getastart = new GetAStart({
+                title: req.body.title,
+                description: req.body.description,
+                items: items
+            })
+            getastart.save().then((data) => {
+                let i_data = {}
+                let i = 0;
+                items.forEach(item => {
+                    for(let key in item){
+                    i_data[key+'_'+i] = item[key];
+                    }
+                    i++;
+                });
+                data = {
+                    id: data._id.toString(),
+                    title: data.title,
+                    description: data.description,
+                    ...i_data,
+                }
+                console.log(data)
+                res.render('admin/getastart', {data})
+            })
+        }
+    }
 }

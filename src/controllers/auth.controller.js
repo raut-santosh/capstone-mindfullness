@@ -75,7 +75,7 @@ exports.login = (req, res) => {
                 },
                 process.env.JWT_KEY,
                 {
-                  expiresIn: "1h",
+                  expiresIn: "12h",
                 }
               );
               res.cookie('token', token, { httpOnly: true });
