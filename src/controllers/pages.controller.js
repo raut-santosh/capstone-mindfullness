@@ -34,8 +34,26 @@ exports.blogDetails = (req, res) => {
     res.render('blog-details')
 }
 
-exports.portfolioDetails = (req, res) => {
-    res.render('portfolio-details')
+exports.portfolioDetails = async (req, res) => {
+    if(req.method == 'GET'){
+        await Blog.findOne({}).then((data) => {
+                // let i_data = {}
+                // let i = 0;
+                // data.items.forEach(item => {
+                //     for(let key in item){
+                //     i_data[key+'_'+i] = item[key];
+                //     }
+                //     i++;
+                // });
+                data = {
+                    title: data.title,
+                    description:data.description,
+                    
+                }
+                console.log(data)
+                res.render('portfolio-details',data)
+        })
+    }
 }
 
 exports.errorPage = (req, res) => {

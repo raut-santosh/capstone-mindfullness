@@ -6,9 +6,7 @@ const blogSchema = mongoose.Schema({
     description: {
         type: String
     },
-    header_image: {
-        type: String
-    }
+    file:[{ type: mongoose.Schema.Types.ObjectId, ref: 'file', autopopulate:{select:['name','path','type']} }],
 })
 
 module.exports = mongoose.model("Blog", blogSchema);
