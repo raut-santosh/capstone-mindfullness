@@ -6,6 +6,7 @@ const blogSchema = mongoose.Schema({
     description: {
         type: String
     },
+    tagline: {type: String},
     file:{ type: mongoose.Schema.Types.ObjectId, ref: 'files', autopopulate:{select:['name','path','type']} },
 })
 

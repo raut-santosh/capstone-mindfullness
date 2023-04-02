@@ -21,7 +21,7 @@ module.exports = function (app) {
     app.get('/about', checkAuth, pagesController.about)
     app.get('/contact', checkAuth, pagesController.contact)
     app.get('/portfolio-details', checkAuth, pagesController.portfolioDetails)
-    app.get('/blog-details', checkAuth, pagesController.blogDetails)
+    app.get('/blog-details/:id', checkAuth, pagesController.blogDetails)
 
     app.get('/admin',checkAuth, (req, res) => {
         res.redirect('/admin/dashboard')

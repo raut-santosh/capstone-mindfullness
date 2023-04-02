@@ -1,24 +1,44 @@
 const GetAStart = require('../models/getstart.model')
+const Blog = require('../models/blog.model')
+const File = require('../models/file.model')
 
 exports.home = async (req, res, next) => {
     if(req.method == 'GET'){
-        await GetAStart.findOne({}).then((data) => {
-            let i_data = {}
-                let i = 0;
-                data.items.forEach(item => {
-                    for(let key in item){
-                    i_data[key+'_'+i] = item[key];
-                    }
-                    i++;
-                });
-                data = {
-                    title: data.title,
-                    description:data.description,
-                    ...i_data,
-                }
-                console.log(data)
-                res.render('index',data)
-        })
+        let getstart = await GetAStart.findOne({});
+        let i_data = {}
+        let i = 0;
+        getstart.items.forEach(item => {
+            for(let key in item){
+            i_data[key+'_'+i] = item[key];
+            }
+            i++;
+        });
+        getastart = {
+            title: getstart.title,
+            description:getstart.description,
+            ...i_data,
+        }
+
+        let blg = await Blog.find({});
+        let blogArr = [];
+        for (const blog of blg) {
+            let temp = {};
+            let f = await File.findOne({_id : blog.file});
+            temp._id = blog._id;
+            temp.title = blog.title;
+            temp.description = blog.description;
+            temp.tagline = blog.tagline;
+            temp.filepath = f.path;
+            blogArr.push(temp);
+        }
+        let data = {
+            getastart: getastart,
+            blog: blogArr
+        }
+        // console.log(data.blog);
+
+        res.render('index',{data})
+        
     }
 }
 
@@ -30,7 +50,14 @@ exports.contact = (req, res) => {
     res.render('contact')
 }
 
-exports.blogDetails = (req, res) => {
+exports.blogDetails = async (req, res) => {
+    console.log('hi')
+    if(req.method == 'GET'){
+        await Blog.findOne({_id: req.query.id}).then((data) => {
+            res.render('blog-details', {data})
+        })
+        res.render('blog-details')
+    }
     res.render('blog-details')
 }
 

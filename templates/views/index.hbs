@@ -211,12 +211,13 @@
     <div class="portfolio-area pb--120 bg_color--1">
         <div class="container">
             <div class="row mt_dec--30">
+                {{#each data.blog}}
                 <div class="col-lg-6 col-md-6 col-12 mt--30">
                     <div class="im_portfolio">
                         <div class="thumbnail_inner">
                             <div class="thumbnail">
-                                <a href="blog-details.html">
-                                    <img src="assets/images/portfolio/interior/img1.jpg" alt="React Creative Agency">
+                                <a href="blog-details?id={{this._id}}">
+                                    <img src="{{this.filepath}}" alt="React Creative Agency">
                                 </a>
                             </div>
                         </div>
@@ -224,22 +225,23 @@
                             <div class="inner">
                                 <div class="portfolio_heading">
                                     <div class="category_list">
-                                        <a href="blog-details.html">Blog</a>
+                                        <a href="blog-details?id={{this._id}}">Blog</a>
                                     </div>
                                     <h4 class="title">
-                                        <a href="blog-details.html">Ask Dr. Christine: Youth Mental Health</a>
+                                        <a href="blog-details?id={{this._id}}">{{this.title}}</a>
                                     </h4>
                                 </div>
                                 <div class="portfolio_hover">
-                                    <p>Once you have identified that your child has a mental health issue and needs further support, you’ll need to communicate your concerns and assess if your child has the same level of concern.</p>
+                                    <p>{{this.tagline}}</p>
                                 </div>
                             </div>
                         </div>
-                        <a class="transparent_link" href="blog-details.html">
+                        <a class="transparent_link" href="blog-details?id={{this._id}}">
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-12 mt--30">
+                {{/each}}
+                {{!-- <div class="col-lg-6 col-md-6 col-12 mt--30">
                     <div class="im_portfolio">
                         <div class="thumbnail_inner">
                             <div class="thumbnail">
@@ -320,7 +322,7 @@
                         </div>
                         <a class="transparent_link" href="blog-details.html"></a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -333,8 +335,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="inner text-center">
-                            <h2>{{title}}</h2>
-                            <p>{{{description}}}</p>
+                            <h2>{{data.getastart.title}}</h2>
+                            <p>{{{data.getastart.description}}}</p>
                             <!--<a class="btn-default btn-large btn-hover-white mt--50 mt_sm--30 mt_md--30" href="contact.html"><span>Purchase Imroz</span></a>-->
                         </div>
                     </div>
@@ -350,26 +352,26 @@
             <div class="row mt--10">
                 <div class="counterup_style--2 mt--30 col-lg-3 col-md-6 col-6">
                     <div class="animated fadeInUp" style="animation-duration: 1s;">
-                        <h5 class="counter"><span>{{item_count_0}}</span></h5>
-                        <h4 class="description">{{item_name_0}}</h4>
+                        <h5 class="counter"><span>{{data.getastart.item_count_0}}</span></h5>
+                        <h4 class="description">{{data.getastart.item_name_0}}</h4>
                     </div>
                 </div>
                 <div class="counterup_style--2 mt--30 col-lg-3 col-md-6 col-6">
                     <div class="animated fadeInUp" style="animation-duration: 1s;">
-                        <h5 class="counter"><span>{{item_count_1}}</span></h5>
-                        <h4 class="description">{{item_name_1}}</h4>
+                        <h5 class="counter"><span>{{data.getastart.item_count_1}}</span></h5>
+                        <h4 class="description">{{data.getastart.item_name_1}}</h4>
                     </div>
                 </div>
                 <div class="counterup_style--2 mt--30 col-lg-3 col-md-6 col-6">
                     <div class="animated fadeInUp" style="animation-duration: 1s;">
-                        <h5 class="counter"><span>{{item_count_2}}</span></h5>
-                        <h4 class="description">{{item_name_2}}</h4>
+                        <h5 class="counter"><span>{{data.getastart.item_count_2}}</span></h5>
+                        <h4 class="description">{{data.getastart.item_name_2}}</h4>
                     </div>
                 </div>
                 <div class="counterup_style--2 mt--30 col-lg-3 col-md-6 col-6">
                     <div class="animated fadeInUp" style="animation-duration: 1s;">
-                        <h5 class="counter"><span>{{item_count_3}}</span></h5>
-                        <h4 class="description">{{item_name_3}}</h4>
+                        <h5 class="counter"><span>{{data.getastart.item_count_3}}</span></h5>
+                        <h4 class="description">{{data.getastart.item_name_3}}</h4>
                     </div>
                 </div>
             </div>

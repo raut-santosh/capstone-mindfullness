@@ -33,6 +33,7 @@ exports.blog_addedit = async (req, res) => {
                 id: blog._id,
                 title: blog.title,
                 description: blog.description,
+                tagline: blog.tagline,
                 filename: file.name,
                 filepath: file.path,
                 fileid: file._id
@@ -58,17 +59,25 @@ exports.blog_addedit = async (req, res) => {
                 let data = {
                     title: req.body.title,
                     description: req.body.description,
+                    tagline: req.body.tagline,
                     filename: file.name,
                     filepath: file.path,
-                    fileid: file._id
+                    fileid: file._id,
+                    id: req.body.id
                 }
-                let blog = Blog.findOneAndUpdate({_id: req.body.id}, {data})
+                await Blog.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    tagline: req.body.tagline,
+                    file: file._id
+                })
                 res.render('admin/blog_addedit',{data})
             }else{
                 console.log('POST: blog_addedit with id without file')
                 let blog = await Blog.findOneAndUpdate({_id: req.body.id}, {
                     title: req.body.title,
                     description: req.body.description,
+                    tagline: req.body.tagline,
                     file: req.body.fileid
                 })
 
@@ -77,6 +86,7 @@ exports.blog_addedit = async (req, res) => {
                     id: req.body.id,
                     title: req.body.title,
                     description: req.body.description,
+                    tagline: req.body.tagline,
                     filename: file.name,
                     filepath: file.path,
                     fileid: file._id
@@ -100,6 +110,7 @@ exports.blog_addedit = async (req, res) => {
             let blog = new Blog({
                 title: req.body.title,
                 description: req.body.description,
+                tagline: req.body.tagline,
                 fileid: fileId,
                 file: file
             })
@@ -109,6 +120,7 @@ exports.blog_addedit = async (req, res) => {
                 id: blog.id,
                 title: blog.title,
                 description: blog.description,
+                tagline: req.body.tagline,
                 filename: file.name,
                 filepath: file.path,
                 fileid: file._id
