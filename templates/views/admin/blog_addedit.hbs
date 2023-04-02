@@ -23,8 +23,9 @@
             <h5 class="card-title">Write Blog</h5>
 
             <!-- Multi Columns Form -->
-            <form class="row g-3" action="/admin/blog_addedit?id={{data.id}}" method="POST" enctype="multipart/form-data">
-              {{!-- <input type="text" style="display:none;" name="id" value="{{{data._id}}}"> --}}
+            <form class="row g-3" action="/admin/blog_addedit" method="POST" enctype="multipart/form-data">
+              <input type="text" style="display:none;" name="id" value="{{data.id}}">
+              <input type="text" style="display:none;" name="fileid" value="{{data.fileid}}">
               <div class="col-md-12">
                 <div class="mb-3">
                   <label for="inputName5" class="form-label">Title</label>
@@ -33,8 +34,12 @@
                   <div class="mb-3">
                     <label for="inputNumber" class="col-form-label">Image</label>
                     <div class="col-sm-12">
-                      <input class="form-control" type="file" id="formFile" name="image" value="{{data.image}}">
+                      <input class="form-control" type="file" id="formFile" name="image" value="{{data.file}}">
+
                     </div>
+                    {{#if data.filepath}}
+                    <img style="width:100px;" class="card-image mt-2" src="/{{data.filepath}}" alt="file">
+                    {{/if}}
                   </div>
                    <div class="mb-3">
                     <label for="tiny" class="form-label">Description</label>

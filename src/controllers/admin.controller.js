@@ -3,6 +3,7 @@ const NGO = require('../models/ngo.model')
 const Blog = require('../models/blog.model')
 const GetAStart = require('../models/getstart.model')
 const Professionals = require('../models/professionals.model') 
+const File = require('../models/file.model')
 const path = require('path')
 const multer = require('multer')
 
@@ -19,45 +20,101 @@ exports.dashboard = (req, res) => {
 }
 
 exports.blog_addedit = async (req, res) => {
-    console.log(req.file)
+    console.log('req body: ',req.body)
     if(req.method == 'GET'){
         if(!req.query.id){
+            console.log('GET: blog_adddit without id')
             res.render('admin/blog_addedit')
         }else{
-            Blog.findOne({_id: req.query.id}).then((data) => {
-                res.render('admin/blog_addedit',{data})
-            })
-        }
-    }else{
-        if(req.query.id){
-            let blog = await Blog.findOne({_id: req.query.id});
-            let data = new Blog({
+            console.log('GET: blog_adddit with id')
+            let blog = await Blog.findOne({_id: req.query.id})
+            let file = await File.findOne({_id: blog.file._id})
+            let data = {
                 id: blog._id,
                 title: blog.title,
-                file: blog.file,
-                description: blog.description
-            })
-            data.save().then((data)=>{
-                res.render('admin/blog_addedit',{data})
-            })
-        }
-        let file = {name: req.file.orignalname, filename: req.file.filename, type: req.file.type, path: req.file.path}
-        let blog = new Blog({
-            title: req.body.title,
-            description: req.body.description,
-            file: file
-        })
-        blog.save().then((data) => {
+                description: blog.description,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
             // console.log(data)
-            res.render('admin/blog_addedit', {
-                data: {
-                    id: data._id,
-                    title: data.title,
-                    description: data.description,
-                    file: data.file
+            res.render('admin/blog_addedit',{data})  
+        }
+    }else{
+        if(req.body.id){
+            if(req.file){
+                console.log('POST: blog_adddit with id with file')
+                console.log('got new file')
+                let file = new File(
+                    {
+                        name: req.file.originalname, 
+                        filename: req.file.filename, 
+                        type: req.file.mimetype, 
+                        path: req.file.path
+                    }
+                )
+                file.save();
+                let f = await File.findOne({_id: file._id});
+                let data = {
+                    title: req.body.title,
+                    description: req.body.description,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id
                 }
+                let blog = Blog.findOneAndUpdate({_id: req.body.id}, {data})
+                res.render('admin/blog_addedit',{data})
+            }else{
+                console.log('POST: blog_addedit with id without file')
+                let blog = await Blog.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    file: req.body.fileid
+                })
+
+                let file = await File.findOne({_id: req.body.fileid})
+                let data = {
+                    id: req.body.id,
+                    title: req.body.title,
+                    description: req.body.description,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id
+                }
+                res.render('admin/blog_addedit', {data})
+            }
+             
+        }else{
+            console.log('POST: blog_addedit without id')
+            let file = new File(
+                {
+                    name: req.file.originalname, 
+                    filename: req.file.filename, 
+                    type: req.file.mimetype, 
+                    path: req.file.path
+                }
+            )
+            file.save();
+            let fileId =  file._id.toString();  
+            console.log(fileId)
+            let blog = new Blog({
+                title: req.body.title,
+                description: req.body.description,
+                fileid: fileId,
+                file: file
             })
-        })
+            console.log(blog)
+            blog.save();
+            let b = {
+                id: blog.id,
+                title: blog.title,
+                description: blog.description,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
+            res.render('admin/blog_addedit',{data:b})
+        }
     }
     
 }
