@@ -2,6 +2,7 @@ const GetAStart = require('../models/getstart.model')
 const Blog = require('../models/blog.model')
 const File = require('../models/file.model')
 
+
 exports.home = async (req, res, next) => {
     if(req.method == 'GET'){
         let getstart = await GetAStart.findOne({});
@@ -51,12 +52,16 @@ exports.contact = (req, res) => {
 }
 
 exports.blogDetails = async (req, res) => {
-    console.log('hi')
     if(req.method == 'GET'){
-        await Blog.findOne({_id: req.query.id}).then((data) => {
+        await Blog.findOne({_id: req.query.id}).then((result) => {
+            let data = {
+                id: result._id,
+                title: result.title,
+                description: result.description,
+            }
             res.render('blog-details', {data})
         })
-        res.render('blog-details')
+       return res.render('blog-details')
     }
     res.render('blog-details')
 }
