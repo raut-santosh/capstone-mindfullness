@@ -71,7 +71,7 @@ exports.home = async (req, res, next) => {
         }
         // console.log(data.professional);
 
-        res.render('index',{data})
+        return res.render('index',{data})
         
     }
 }
@@ -85,15 +85,13 @@ exports.about = async (req, res) => {
                 description: result.description,
                 position: result.position
             }
-            res.render('about', {data})
+            return res.render('about', {data})
         })
-       return res.render('about')
     }
-    res.render('about')
 }
 
 exports.contact = (req, res) => {
-    res.render('contact')
+    return res.render('contact')
 }
 
 exports.blogDetails = async (req, res) => {
@@ -105,11 +103,9 @@ exports.blogDetails = async (req, res) => {
                 description: result.description,
                 tagline: result.tagline,
             }
-            res.render('blog-details', {data})
+            return res.render('blog-details', {data})
         })
-       return res.render('blog-details')
     }
-    res.render('blog-details')
 }
 
 exports.ngoDetails = async (req, res) => {
@@ -121,13 +117,11 @@ exports.ngoDetails = async (req, res) => {
                 description: result.description,
                 tagline: result.tagline,
             }
-            res.render('ngo-details', {data})
+            return res.render('ngo-details', {data})
         })
-       return res.render('ngo-details')
     }
-    res.render('ngo-details')
 }
 
 exports.errorPage = (req, res) => {
-    res.render('404')
+   return res.render('404')
 }

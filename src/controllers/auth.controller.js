@@ -52,12 +52,12 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     if(req.method == 'GET'){
-        res.render('login')
+        return res.render('login')
     }else{
         User.findOne({ email: req.body.email })
       .then((user) => {
         if (user.length < 1) {
-          res.status(404).json({
+          return res.status(404).json({
             message: "User doesn't exits",
           });
         } else {
@@ -72,6 +72,7 @@ exports.login = (req, res) => {
                 {
                   email: user.email,
                   userId: user._id,
+                  is_admin: user.is_admin
                 },
                 process.env.JWT_KEY,
                 {
@@ -83,9 +84,9 @@ exports.login = (req, res) => {
             //     message: "Login successfully",
             //     token: token,
             //   });
-            res.redirect('/home')
+            return res.redirect('/admin/dashboard')
             } else {
-              res.status(401).json({
+              return res.status(401).json({
                 message: "Wrong password",
               });
             }
@@ -93,7 +94,7 @@ exports.login = (req, res) => {
         }
       })
       .catch(() => {
-        res.status(500).json({
+       return res.status(500).json({
           error: "User not exists",
         });
       });

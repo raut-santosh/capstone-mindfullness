@@ -6,12 +6,18 @@ module.exports = (req, res, next) => {
     const token = req.cookies.token;
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.userData = decoded;
-    next();
+    if(req.userData.is_admin == true){
+      next();
+      // console.log(req.userData)
+    }else{
+
+      return res.redirect('/login')
+    }
+    // next();
   } catch (e) {
     // return res.status(401).json({
     //   message: "Your not logged in",
     // });
-    res.redirect('/login')
-    next();
+    return res.redirect('/login')
   }
 };

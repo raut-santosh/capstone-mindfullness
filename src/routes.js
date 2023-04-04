@@ -17,11 +17,11 @@ module.exports = function (app) {
     app.get('/login', authController.login)
     app.post('/login', authController.login)
 
-    app.get('/home', checkAuth, pagesController.home)
-    app.get('/about', checkAuth, pagesController.about)
-    app.get('/contact', checkAuth, pagesController.contact)
-    app.get('/ngo-details', checkAuth, pagesController.ngoDetails)
-    app.get('/blog-details', checkAuth, pagesController.blogDetails)
+    app.get('/home', pagesController.home)
+    app.get('/about', pagesController.about)
+    app.get('/contact', pagesController.contact)
+    app.get('/ngo-details', pagesController.ngoDetails)
+    app.get('/blog-details', pagesController.blogDetails)
 
     app.get('/admin',checkAuth, (req, res) => {
         res.redirect('/admin/dashboard')

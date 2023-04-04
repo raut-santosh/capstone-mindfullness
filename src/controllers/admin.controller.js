@@ -16,7 +16,7 @@ exports.dashboard = (req, res) => {
             console.log(e)
         })
     }
-    res.render('admin/dashboard')
+    return res.render('admin/dashboard')
 }
 
 exports.blog_addedit = async (req, res) => {
@@ -24,7 +24,7 @@ exports.blog_addedit = async (req, res) => {
     if(req.method == 'GET'){
         if(!req.query.id){
             console.log('GET: blog_adddit without id')
-            res.render('admin/blog_addedit')
+            return res.render('admin/blog_addedit')
         }else{
             console.log('GET: blog_adddit with id')
             let blog = await Blog.findOne({_id: req.query.id})
@@ -39,7 +39,7 @@ exports.blog_addedit = async (req, res) => {
                 fileid: file._id
             }
             // console.log(data)
-            res.render('admin/blog_addedit',{data})  
+            return res.render('admin/blog_addedit',{data})  
         }
     }else{
         if(req.body.id){
@@ -71,7 +71,7 @@ exports.blog_addedit = async (req, res) => {
                     tagline: req.body.tagline,
                     file: file._id
                 })
-                res.render('admin/blog_addedit',{data})
+                return res.render('admin/blog_addedit',{data})
             }else{
                 console.log('POST: blog_addedit with id without file')
                 let blog = await Blog.findOneAndUpdate({_id: req.body.id}, {
@@ -91,7 +91,7 @@ exports.blog_addedit = async (req, res) => {
                     filepath: file.path,
                     fileid: file._id
                 }
-                res.render('admin/blog_addedit', {data})
+                return res.render('admin/blog_addedit', {data})
             }
              
         }else{
@@ -125,7 +125,7 @@ exports.blog_addedit = async (req, res) => {
                 filepath: file.path,
                 fileid: file._id
             }
-            res.render('admin/blog_addedit',{data:b})
+            return res.render('admin/blog_addedit',{data:b})
         }
     }
     
@@ -134,7 +134,7 @@ exports.blog_addedit = async (req, res) => {
 exports.blog_list = async (req, res) => {
     if(req.method == 'GET'){
         Blog.find({}).then((list) => {
-            res.render('admin/blog_list',{ list })
+            return res.render('admin/blog_list',{ list })
         })
     }
 }
@@ -144,7 +144,7 @@ exports.professionals_addedit = async (req, res) => {
     if(req.method == 'GET'){
         if(!req.query.id){
             console.log('GET: professionals_adddit without id')
-            res.render('admin/professionals_addedit')
+            return res.render('admin/professionals_addedit')
         }else{
             console.log('GET: professionals_adddit with id')
             let professionals = await Professionals.findOne({_id: req.query.id})
@@ -160,7 +160,7 @@ exports.professionals_addedit = async (req, res) => {
                 fileid: file._id
             }
             // console.log(data)
-            res.render('admin/professionals_addedit',{data})  
+            return res.render('admin/professionals_addedit',{data})  
         }
     }else{
         if(req.body.id){
@@ -194,7 +194,7 @@ exports.professionals_addedit = async (req, res) => {
                     tagline: req.body.tagline,
                     file: file._id
                 })
-                res.render('admin/professionals_addedit',{data})
+               return res.render('admin/professionals_addedit',{data})
             }else{
                 console.log('POST: professionals_addedit with id without file')
                 let professionals = await Professionals.findOneAndUpdate({_id: req.body.id}, {
@@ -216,7 +216,7 @@ exports.professionals_addedit = async (req, res) => {
                     filepath: file.path,
                     fileid: file._id
                 }
-                res.render('admin/professionals_addedit', {data})
+                return res.render('admin/professionals_addedit', {data})
             }
              
         }else{
@@ -240,7 +240,6 @@ exports.professionals_addedit = async (req, res) => {
                 fileid: fileId,
                 file: file
             })
-            console.log(professionals)
             professionals.save();
             let b = {
                 id: professionals.id,
@@ -252,7 +251,7 @@ exports.professionals_addedit = async (req, res) => {
                 filepath: file.path,
                 fileid: file._id
             }
-            res.render('admin/professionals_addedit',{data:b})
+            return res.render('admin/professionals_addedit',{data:b})
         }
     }
 }
@@ -260,7 +259,7 @@ exports.professionals_addedit = async (req, res) => {
 exports.professionals_list = async (req, res) => {
     if(req.method == 'GET'){
         Professionals.find({}).then((list) => {
-            res.render('admin/professionals_list',{ list })
+            return res.render('admin/professionals_list',{ list })
         })
     }
 }
@@ -286,14 +285,14 @@ exports.getastart = async (req, res) => {
                     ...i_data,
                 }
                 console.log('data',data)
-                res.render('admin/getastart', {data})
+                return res.render('admin/getastart', {data})
             }else{
-                res.render('admin/getastart')
+               return res.render('admin/getastart')
             }
             
         })
         console.log('get without id')
-        res.render('admin/getastart')
+        return res.render('admin/getastart')
     }else{
         if(req.body.id){
             console.log('post with id')
@@ -327,7 +326,7 @@ exports.getastart = async (req, res) => {
                     description: data.description,
                     ...i_data,
                 }
-                res.render('admin/getastart',{data})
+                return res.render('admin/getastart',{data})
             })
         }else{
             console.log('post without id')
@@ -363,7 +362,7 @@ exports.getastart = async (req, res) => {
                     ...i_data,
                 }
                 console.log(data)
-                res.render('admin/getastart', {data})
+                return res.render('admin/getastart', {data})
             })
         }
     }
@@ -374,7 +373,7 @@ exports.ngo_addedit = async (req, res) => {
     if(req.method == 'GET'){
         if(!req.query.id){
             console.log('GET: ngo_adddit without id')
-            res.render('admin/ngo_addedit')
+            return res.render('admin/ngo_addedit')
         }else{
             console.log('GET: ngo_adddit with id')
             let ngo = await Ngo.findOne({_id: req.query.id})
@@ -390,7 +389,7 @@ exports.ngo_addedit = async (req, res) => {
                 fileid: file._id
             }
             // console.log(data)
-            res.render('admin/ngo_addedit',{data})  
+            return res.render('admin/ngo_addedit',{data})  
         }
     }else{
         if(req.body.id){
@@ -424,7 +423,7 @@ exports.ngo_addedit = async (req, res) => {
                     tagline: req.body.tagline,
                     file: file._id
                 })
-                res.render('admin/ngo_addedit',{data})
+                return res.render('admin/ngo_addedit',{data})
             }else{
                 console.log('POST: ngo_addedit with id without file')
                 let ngo = await Ngo.findOneAndUpdate({_id: req.body.id}, {
@@ -446,7 +445,7 @@ exports.ngo_addedit = async (req, res) => {
                     filepath: file.path,
                     fileid: file._id
                 }
-                res.render('admin/ngo_addedit', {data})
+                return res.render('admin/ngo_addedit', {data})
             }
              
         }else{
@@ -482,7 +481,7 @@ exports.ngo_addedit = async (req, res) => {
                 filepath: file.path,
                 fileid: file._id
             }
-            res.render('admin/ngo_addedit',{data:b})
+            return res.render('admin/ngo_addedit',{data:b})
         }
     }
 }
@@ -490,7 +489,7 @@ exports.ngo_addedit = async (req, res) => {
 exports.ngo_list = async (req, res) => {
     if(req.method == 'GET'){
         await Ngo.find({}).then((list) => {
-            res.render('admin/ngo_list',{ list })
+            return res.render('admin/ngo_list',{ list })
         })
     }
 }
