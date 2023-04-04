@@ -27,8 +27,8 @@ module.exports = function (app) {
         res.redirect('/admin/dashboard')
     })
     app.get('/admin/dashboard', checkAuth, adminController.dashboard)
-    app.get('/admin/blog_list', checkAuth, adminController.blog_list)
 
+    app.get('/admin/blog_list', checkAuth, adminController.blog_list)
     app.get('/admin/blog_addedit', checkAuth, upload.single('image'), adminController.blog_addedit)
     app.get('/admin/blog_addedit/:id', checkAuth, upload.single('image'), adminController.blog_addedit)
     app.post('/admin/blog_addedit', checkAuth, upload.single('image'), adminController.blog_addedit)
@@ -37,8 +37,11 @@ module.exports = function (app) {
     app.get('/admin/ngo', checkAuth, adminController.ngo)
     app.post('/admin/ngo', checkAuth, adminController.ngo)
 
-    app.get('/admin/professionals', checkAuth, adminController.professionals)
-    app.post('/admin/professionals', checkAuth, adminController.professionals)
+    app.get('/admin/professionals_list', checkAuth, adminController.professionals_list)
+    app.get('/admin/professionals_addedit', checkAuth, upload.single('image'), adminController.professionals_addedit)
+    app.get('/admin/professionals_addedit/:id', checkAuth, upload.single('image'), adminController.professionals_addedit)
+    app.post('/admin/professionals_addedit', checkAuth, upload.single('image'), adminController.professionals_addedit)
+    app.post('/admin/professionals_addedit/:id', checkAuth, upload.single('image'), adminController.professionals_addedit)
 
     app.get('/admin/getastart', checkAuth, adminController.getastart)
     app.get('/admin/getastart/:id', checkAuth, adminController.getastart)

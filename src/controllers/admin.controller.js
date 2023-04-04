@@ -172,8 +172,130 @@ exports.ngo = async (req, res) => {
     }
 }
 
-exports.professionals = (req, res) => {
-    res.render('admin/professionals')
+exports.professionals_addedit = async (req, res) => {
+    console.log('req body: ',req.body)
+    if(req.method == 'GET'){
+        if(!req.query.id){
+            console.log('GET: professionals_adddit without id')
+            res.render('admin/professionals_addedit')
+        }else{
+            console.log('GET: professionals_adddit with id')
+            let professionals = await Professionals.findOne({_id: req.query.id})
+            let file = await File.findOne({_id: professionals.file._id})
+            let data = {
+                id: professionals._id,
+                title: professionals.title,
+                description: professionals.description,
+                tagline: professionals.tagline,
+                position: professionals.position,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
+            // console.log(data)
+            res.render('admin/professionals_addedit',{data})  
+        }
+    }else{
+        if(req.body.id){
+            if(req.file){
+                console.log('POST: professionals_adddit with id with file')
+                console.log('got new file')
+                let file = new File(
+                    {
+                        name: req.file.originalname, 
+                        filename: req.file.filename, 
+                        type: req.file.mimetype, 
+                        path: req.file.path
+                    }
+                )
+                file.save();
+                let f = await File.findOne({_id: file._id});
+                let data = {
+                    title: req.body.title,
+                    description: req.body.description,
+                    tagline: req.body.tagline,
+                    position: req.body.position,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id,
+                    id: req.body.id
+                }
+                await Professionals.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    file: file._id
+                })
+                res.render('admin/professionals_addedit',{data})
+            }else{
+                console.log('POST: professionals_addedit with id without file')
+                let professionals = await Professionals.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    file: req.body.fileid
+                })
+
+                let file = await File.findOne({_id: req.body.fileid})
+                let data = {
+                    id: req.body.id,
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id
+                }
+                res.render('admin/professionals_addedit', {data})
+            }
+             
+        }else{
+            console.log('POST: professionals_addedit without id')
+            let file = new File(
+                {
+                    name: req.file.originalname, 
+                    filename: req.file.filename, 
+                    type: req.file.mimetype, 
+                    path: req.file.path
+                }
+            )
+            file.save();
+            let fileId =  file._id.toString();  
+            console.log(fileId)
+            let professionals = new Professionals({
+                title: req.body.title,
+                description: req.body.description,
+                position: req.body.position,
+                tagline: req.body.tagline,
+                fileid: fileId,
+                file: file
+            })
+            console.log(professionals)
+            professionals.save();
+            let b = {
+                id: professionals.id,
+                title: professionals.title,
+                description: professionals.description,
+                position: professionals.position,
+                tagline: professionals.tagline,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
+            res.render('admin/professionals_addedit',{data:b})
+        }
+    }
+}
+
+exports.professionals_list = async (req, res) => {
+    if(req.method == 'GET'){
+        Professionals.find({}).then((list) => {
+            res.render('admin/professionals_list',{ list })
+        })
+    }
 }
 
 exports.getastart = async (req, res) => {

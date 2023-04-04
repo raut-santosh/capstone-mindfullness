@@ -1,5 +1,6 @@
 const GetAStart = require('../models/getstart.model')
 const Blog = require('../models/blog.model')
+const Professional = require('../models/professionals.model')
 const File = require('../models/file.model')
 
 
@@ -32,19 +33,46 @@ exports.home = async (req, res, next) => {
             temp.filepath = f.path;
             blogArr.push(temp);
         }
+
+        let proff = await Professional.find({});
+        let proffArr = [];
+        for (const pr of proff) {
+            let temp = {};
+            let f = await File.findOne({_id : pr.file});
+            temp.id = pr._id;
+            temp.title = pr.title;
+            temp.description = pr.description;
+            temp.position = pr.position;
+            temp.tagline = pr.tagline;
+            temp.filepath = f.path;
+            proffArr.push(temp);
+        }
         let data = {
             getastart: getastart,
-            blog: blogArr
+            blog: blogArr,
+            professional: proffArr
         }
-        // console.log(data.blog);
+        // console.log(data.professional);
 
         res.render('index',{data})
         
     }
 }
 
-exports.about = (req, res) => {
-    res.render('about');
+exports.about = async (req, res) => {
+    if(req.method == 'GET'){
+        await Professional.findOne({_id: req.query.id}).then((result) => {
+            let data = {
+                id: result._id,
+                title: result.title,
+                description: result.description,
+                position: result.position
+            }
+            res.render('about', {data})
+        })
+       return res.render('about')
+    }
+    res.render('about')
 }
 
 exports.contact = (req, res) => {
@@ -68,7 +96,7 @@ exports.blogDetails = async (req, res) => {
 
 exports.portfolioDetails = async (req, res) => {
     if(req.method == 'GET'){
-        await Blog.findOne({}).then((data) => {
+        await Professional.findOne({}).then((data) => {
                 // let i_data = {}
                 // let i = 0;
                 // data.items.forEach(item => {

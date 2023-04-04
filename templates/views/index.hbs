@@ -447,18 +447,20 @@
                     </div>
                 </div>
                 <div class="row">
+                    
+                    {{#each data.professional}}
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="team team-style--bottom">
                             <div class="thumbnail">
-                                <img src="assets/images/team/team-01.jpg" alt="Blog Images">
+                                <img src="{{this.filepath}}" alt="Blog Images">
                             </div>
 
                             <div class="content">
-                                <h4 class="title">Benjamin</h4>
-                                <p class="designation">Sr. Web Developer</p>
+                                <h4 class="title">{{this.title}}</h4>
+                                <p class="designation">{{this.position}}</p>
                             </div>
                             <div class="footer text-center">
-                                <a href="./about.html" style="position:relative;z-index:99;color:white" class="btn btn-danger">Read more</a>
+                                <a href="./about?id={{this.id}}" style="position:relative;z-index:99;color:white" class="btn btn-danger">Read more</a>
                             </div>
                             <ul class="social-icon">
                                 <li>
@@ -480,94 +482,7 @@
                         </div>
                         
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="team team-style--bottom">
-                            <div class="thumbnail">
-                                <img src="assets/images/team/team-02.jpg" alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Theodore Sefa</h4>
-                                <p class="designation">Front-end Engineer</p>
-                            </div>
-                            <div class="footer text-center">
-                                <a href="./about2.html" style="position:relative;z-index:99;color:white" class="btn btn-danger">Read more</a>
-                            </div>
-                            <ul class="social-icon">
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="linkedin"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="team team-style--bottom">
-                            <div class="thumbnail">
-                                <img src="assets/images/team/team-03.jpg" alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Christopher</h4>
-                                <p class="designation">Sr. Graphic Designer</p>
-                            </div>
-                            <div class="footer text-center">
-                                <a href="./about3.html" style="position:relative;z-index:99;color:white" class="btn btn-danger">Read more</a>
-                            </div>
-                            <ul class="social-icon">
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="linkedin"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="twitter"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="team team-style--bottom">
-                            <div class="thumbnail">
-                                <img src="assets/images/team/team-04.jpg" alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Thomas</h4>
-                                <p class="designation">Sr. Web Developer</p>
-                            </div>
-                            <div class="footer text-center">
-                                <a href="./about4.html" style="position:relative;z-index:99;color:white" class="btn btn-danger">Read more</a>
-                            </div>
-                            <ul class="social-icon">
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="linkedin"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i data-feather="twitter"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
