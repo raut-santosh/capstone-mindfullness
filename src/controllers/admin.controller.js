@@ -416,7 +416,7 @@ exports.ngo_addedit = async (req, res) => {
                     fileid: file._id,
                     id: req.body.id
                 }
-                await ngo.findOneAndUpdate({_id: req.body.id}, {
+                await Ngo.findOneAndUpdate({_id: req.body.id}, {
                     title: req.body.title,
                     description: req.body.description,
                     position: req.body.position,
