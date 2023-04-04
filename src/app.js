@@ -38,6 +38,20 @@ mongoose
   app.use(bodyParser.json());
   app.use("/uploads", express.static("uploads"));
 
+
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === "OPTIONS") {
+      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+      return res.status(200).json({});
+    }
+    next();
+  });
+
 // creating port so that app can be used with heroku and if app is localy used logical or will provide 3000 to port variable
 const port = process.env.PORT || 3000
 
@@ -60,6 +74,23 @@ app.use(express.static(publicDirectoryPath))
 
 require("./routes")(app);
 
+
+
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+// for our errors (middleware by docs express)
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.render('404',{
+    error: {
+      message: error.message,
+    },
+  });
+});
 // To start using app localy change port to run on lapy
 // app.listen(3000, () => {
 //     console.log('Server is up on port 3000')

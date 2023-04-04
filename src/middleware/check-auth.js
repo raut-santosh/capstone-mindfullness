@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
     // return res.status(401).json({
     //   message: "Your not logged in",
     // });
-    return res.redirect('/login')
+    res.redirect('/login')
+    next();
   }
 };
