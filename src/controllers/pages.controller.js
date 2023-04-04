@@ -2,6 +2,7 @@ const GetAStart = require('../models/getstart.model')
 const Blog = require('../models/blog.model')
 const Professional = require('../models/professionals.model')
 const File = require('../models/file.model')
+const Ngo = require('../models/ngo.model')
 
 
 exports.home = async (req, res, next) => {
@@ -47,10 +48,26 @@ exports.home = async (req, res, next) => {
             temp.filepath = f.path;
             proffArr.push(temp);
         }
+
+        let ngo = await Ngo.find({});
+        let ngoArr = [];
+        for (const pr of ngo) {
+            let temp = {};
+            let f = await File.findOne({_id : pr.file});
+            temp.id = pr._id;
+            temp.title = pr.title;
+            temp.description = pr.description;
+            temp.position = pr.position;
+            temp.tagline = pr.tagline;
+            temp.filepath = f.path;
+            ngoArr.push(temp);
+        }
+
         let data = {
             getastart: getastart,
             blog: blogArr,
-            professional: proffArr
+            professional: proffArr,
+            ngo: ngoArr
         }
         // console.log(data.professional);
 
@@ -86,6 +103,7 @@ exports.blogDetails = async (req, res) => {
                 id: result._id,
                 title: result.title,
                 description: result.description,
+                tagline: result.tagline,
             }
             res.render('blog-details', {data})
         })
@@ -94,26 +112,20 @@ exports.blogDetails = async (req, res) => {
     res.render('blog-details')
 }
 
-exports.portfolioDetails = async (req, res) => {
+exports.ngoDetails = async (req, res) => {
     if(req.method == 'GET'){
-        await Professional.findOne({}).then((data) => {
-                // let i_data = {}
-                // let i = 0;
-                // data.items.forEach(item => {
-                //     for(let key in item){
-                //     i_data[key+'_'+i] = item[key];
-                //     }
-                //     i++;
-                // });
-                data = {
-                    title: data.title,
-                    description:data.description,
-                    
-                }
-                console.log(data)
-                res.render('portfolio-details',data)
+        await Ngo.findOne({_id: req.query.id}).then((result) => {
+            let data = {
+                id: result._id,
+                title: result.title,
+                description: result.description,
+                tagline: result.tagline,
+            }
+            res.render('ngo-details', {data})
         })
+       return res.render('ngo-details')
     }
+    res.render('ngo-details')
 }
 
 exports.errorPage = (req, res) => {

@@ -1,5 +1,5 @@
 const User = require('../models/user.model')
-const NGO = require('../models/ngo.model')
+const Ngo = require('../models/ngo.model')
 const Blog = require('../models/blog.model')
 const GetAStart = require('../models/getstart.model')
 const Professionals = require('../models/professionals.model') 
@@ -135,39 +135,6 @@ exports.blog_list = async (req, res) => {
     if(req.method == 'GET'){
         Blog.find({}).then((list) => {
             res.render('admin/blog_list',{ list })
-        })
-    }
-}
-
-exports.ngo = async (req, res) => {
-    if(req.method == 'GET'){
-        res.render('admin/ngo',{
-            data: {
-                title: 'sam the don',
-                description: 'description of sam',
-                items: {
-                    item_title: 'itemtitle',
-                    item_sub_title: 'items title sub',
-                    item_content: 'i am content',
-                }
-            }
-        })
-    }else{
-        console.log(req.body)
-        const ngo = new NGO({
-            title: req.body.title,
-            description: req.body.description,
-            items: {
-                item_title: req.body.item_title,
-                item_sub_title: req.body.item_sub_title,
-                item_content: req.body.item_content,
-            }
-        })
-        ngo.save().then((data) => {
-            // console.log(data)
-            res.render('admin/ngo', {
-                data: JSON.stringify(data)
-            })
         })
     }
 }
@@ -399,5 +366,131 @@ exports.getastart = async (req, res) => {
                 res.render('admin/getastart', {data})
             })
         }
+    }
+}
+
+exports.ngo_addedit = async (req, res) => {
+    console.log('req body: ',req.body)
+    if(req.method == 'GET'){
+        if(!req.query.id){
+            console.log('GET: ngo_adddit without id')
+            res.render('admin/ngo_addedit')
+        }else{
+            console.log('GET: ngo_adddit with id')
+            let ngo = await Ngo.findOne({_id: req.query.id})
+            let file = await File.findOne({_id: ngo.file._id})
+            let data = {
+                id: ngo._id,
+                title: ngo.title,
+                description: ngo.description,
+                tagline: ngo.tagline,
+                position: ngo.position,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
+            // console.log(data)
+            res.render('admin/ngo_addedit',{data})  
+        }
+    }else{
+        if(req.body.id){
+            if(req.file){
+                console.log('POST: ngo_adddit with id with file')
+                console.log('got new file')
+                let file = new File(
+                    {
+                        name: req.file.originalname, 
+                        filename: req.file.filename, 
+                        type: req.file.mimetype, 
+                        path: req.file.path
+                    }
+                )
+                file.save();
+                let f = await File.findOne({_id: file._id});
+                let data = {
+                    title: req.body.title,
+                    description: req.body.description,
+                    tagline: req.body.tagline,
+                    position: req.body.position,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id,
+                    id: req.body.id
+                }
+                await ngo.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    file: file._id
+                })
+                res.render('admin/ngo_addedit',{data})
+            }else{
+                console.log('POST: ngo_addedit with id without file')
+                let ngo = await Ngo.findOneAndUpdate({_id: req.body.id}, {
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    file: req.body.fileid
+                })
+
+                let file = await File.findOne({_id: req.body.fileid})
+                let data = {
+                    id: req.body.id,
+                    title: req.body.title,
+                    description: req.body.description,
+                    position: req.body.position,
+                    tagline: req.body.tagline,
+                    filename: file.name,
+                    filepath: file.path,
+                    fileid: file._id
+                }
+                res.render('admin/ngo_addedit', {data})
+            }
+             
+        }else{
+            console.log('POST: ngo_addedit without id')
+            let file = new File(
+                {
+                    name: req.file.originalname, 
+                    filename: req.file.filename, 
+                    type: req.file.mimetype, 
+                    path: req.file.path
+                }
+            )
+            file.save();
+            let fileId =  file._id.toString();  
+            console.log(fileId)
+            let ngo = new Ngo({
+                title: req.body.title,
+                description: req.body.description,
+                position: req.body.position,
+                tagline: req.body.tagline,
+                fileid: fileId,
+                file: file
+            })
+            console.log(ngo)
+            ngo.save();
+            let b = {
+                id: ngo.id,
+                title: ngo.title,
+                description: ngo.description,
+                position: ngo.position,
+                tagline: ngo.tagline,
+                filename: file.name,
+                filepath: file.path,
+                fileid: file._id
+            }
+            res.render('admin/ngo_addedit',{data:b})
+        }
+    }
+}
+
+exports.ngo_list = async (req, res) => {
+    if(req.method == 'GET'){
+        await Ngo.find({}).then((list) => {
+            res.render('admin/ngo_list',{ list })
+        })
     }
 }

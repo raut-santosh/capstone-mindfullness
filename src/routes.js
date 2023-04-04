@@ -20,7 +20,7 @@ module.exports = function (app) {
     app.get('/home', checkAuth, pagesController.home)
     app.get('/about', checkAuth, pagesController.about)
     app.get('/contact', checkAuth, pagesController.contact)
-    app.get('/portfolio-details', checkAuth, pagesController.portfolioDetails)
+    app.get('/ngo-details', checkAuth, pagesController.ngoDetails)
     app.get('/blog-details', checkAuth, pagesController.blogDetails)
 
     app.get('/admin',checkAuth, (req, res) => {
@@ -34,14 +34,19 @@ module.exports = function (app) {
     app.post('/admin/blog_addedit', checkAuth, upload.single('image'), adminController.blog_addedit)
     app.post('/admin/blog_addedit/:id', checkAuth, upload.single('image'), adminController.blog_addedit)
 
-    app.get('/admin/ngo', checkAuth, adminController.ngo)
-    app.post('/admin/ngo', checkAuth, adminController.ngo)
 
     app.get('/admin/professionals_list', checkAuth, adminController.professionals_list)
     app.get('/admin/professionals_addedit', checkAuth, upload.single('image'), adminController.professionals_addedit)
     app.get('/admin/professionals_addedit/:id', checkAuth, upload.single('image'), adminController.professionals_addedit)
     app.post('/admin/professionals_addedit', checkAuth, upload.single('image'), adminController.professionals_addedit)
     app.post('/admin/professionals_addedit/:id', checkAuth, upload.single('image'), adminController.professionals_addedit)
+
+    app.get('/admin/ngo_list', checkAuth, adminController.ngo_list)
+    app.get('/admin/ngo_addedit', checkAuth, upload.single('image'), adminController.ngo_addedit)
+    app.get('/admin/ngo_addedit/:id', checkAuth, upload.single('image'), adminController.ngo_addedit)
+    app.post('/admin/ngo_addedit', checkAuth, upload.single('image'), adminController.ngo_addedit)
+    app.post('/admin/ngo_addedit/:id', checkAuth, upload.single('image'), adminController.ngo_addedit)
+
 
     app.get('/admin/getastart', checkAuth, adminController.getastart)
     app.get('/admin/getastart/:id', checkAuth, adminController.getastart)

@@ -689,13 +689,13 @@
             {"breakpoint":480, "settings": {"slidesToShow": 1}}
             ]'>
 
-                <!-- Start Single Portfolio  -->
+                {{#each data.ngo}}
                 <div class="single_portfolio">
                     <div class="im_portfolio">
                         <div class="thumbnail_inner">
                             <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-8.jpg" alt="React Creative Agency">
+                                <a href="ngo-details?id={{this.id}}">
+                                    <img src="{{this.filepath}}" alt="React Creative Agency">
                                 </a>
                             </div>
                         </div>
@@ -703,174 +703,22 @@
                             <div class="inner">
                                 <div class="portfolio_heading">
                                     <div class="category_list">
-                                        <a href="portfolio-details.html">NGO</a>
+                                        <a href="ngo-details?id={{this.id}}">{{this.title}}</a>
                                     </div>
                                     <h4 class="title">
-                                        <a href="portfolio-details.html">NGO1</a>
+                                        <a href="ngo-details?id={{this.id}}">{{this.title}}</a>
                                     </h4>
                                 </div>
                                 <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
+                                    <p>{{this.tagline}}</p>
                                 </div>
                             </div>
                         </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
+                        <a class="transparent_link" href="ngo-details?id={{this.id}}"></a>
                     </div>
                 </div>
-                <!-- End Single Portfolio  -->
+                {{/each}}
 
-                <!-- Start Single Portfolio  -->
-                <div class="single_portfolio">
-                    <div class="im_portfolio">
-                        <div class="thumbnail_inner">
-                            <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-9.jpg" alt="React Creative Agency">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="inner">
-                                <div class="portfolio_heading">
-                                    <div class="category_list">
-                                        <a href="portfolio-details.html">NGO</a>
-                                    </div>
-                                    <h4 class="title">
-                                        <a href="portfolio-details.html">NGO2</a>
-                                    </h4>
-                                </div>
-                                <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
-                    </div>
-                </div>
-                <!-- End Single Portfolio  -->
-                <!-- Start Single Portfolio  -->
-                <div class="single_portfolio">
-                    <div class="im_portfolio">
-                        <div class="thumbnail_inner">
-                            <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-10.jpg" alt="React Creative Agency">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="inner">
-                                <div class="portfolio_heading">
-                                    <div class="category_list">
-                                        <a href="portfolio-details.html">NGO</a>
-                                    </div>
-                                    <h4 class="title">
-                                        <a href="portfolio-details.html">NGO3</a>
-                                    </h4>
-                                </div>
-                                <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
-                    </div>
-                </div>
-                <!-- End Single Portfolio  -->
-                <!-- Start Single Portfolio  -->
-                <div class="single_portfolio">
-                    <div class="im_portfolio">
-                        <div class="thumbnail_inner">
-                            <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-11.jpg" alt="React Creative Agency">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="inner">
-                                <div class="portfolio_heading">
-                                    <div class="category_list">
-                                        <a href="portfolio-details.html">NGO</a>
-                                    </div>
-                                    <h4 class="title">
-                                        <a href="portfolio-details.html">NGO3</a>
-                                    </h4>
-                                </div>
-                                <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
-                    </div>
-                </div>
-                <!-- End Single Portfolio  -->
-                <!-- Start Single Portfolio  -->
-                <div class="single_portfolio">
-                    <div class="im_portfolio">
-                        <div class="thumbnail_inner">
-                            <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-12.jpg" alt="React Creative Agency">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="inner">
-                                <div class="portfolio_heading">
-                                    <div class="category_list">
-                                        <a href="portfolio-details.html">NGO</a>
-                                    </div>
-                                    <h4 class="title">
-                                        <a href="portfolio-details.html">NGO4</a>
-                                    </h4>
-                                </div>
-                                <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
-                    </div>
-                </div>
-                <!-- End Single Portfolio  -->
-
-                <!-- Start Single Portfolio  -->
-                <div class="single_portfolio">
-                    <div class="im_portfolio">
-                        <div class="thumbnail_inner">
-                            <div class="thumbnail">
-                                <a href="portfolio-details.html">
-                                    <img src="assets/images/portfolio/interior/portfolio-13.jpg" alt="React Creative Agency">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="inner">
-                                <div class="portfolio_heading">
-                                    <div class="category_list">
-                                        <a href="portfolio-details.html">NGO </a>
-                                    </div>
-                                    <h4 class="title">
-                                        <a href="portfolio-details.html">NGO5</a>
-                                    </h4>
-                                </div>
-                                <div class="portfolio_hover">
-                                    <p>Lorem ipsum dolor sit amet, conse. Lorem ipsum dolor sit amet,
-                                        conse.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="transparent_link" href="portfolio-details.html"></a>
-                    </div>
-                </div>
-                <!-- End Single Portfolio  -->
 
             </div>
         </div>
