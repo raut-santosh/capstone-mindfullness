@@ -84,7 +84,7 @@ exports.login = (req, res) => {
             //     message: "Login successfully",
             //     token: token,
             //   });
-            return res.redirect('/admin/dashboard')
+            return res.redirect('/admin/blog_list')
             } else {
               return res.status(401).json({
                 message: "Wrong password",
